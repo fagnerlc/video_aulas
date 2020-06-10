@@ -1,3 +1,4 @@
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'package:expenses/components/transaction_list.dart';
@@ -12,6 +13,38 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: MyHomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        accentColor:
+            Colors.tealAccent[400], //Colors.brown//Colors.tealAccent[400]
+        //fontFamily: 'Raleway',
+        //fontFamily: 'OpenSans',
+        //fontFamily: 'Quicksand',
+
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'Raleway',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        accentTextTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'Raleway',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -23,37 +56,52 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: 't0',
+      title: 'Conta antiga',
+      descricao: 'Atual',
+      value: 400.36,
+      date: DateTime.now().subtract(Duration(days: 31)),
+    ),
     Transaction(
       id: 't1',
       title: 'Novo tenis de corrida',
+      descricao: 'compra devido desgasto do tenis atual',
       value: 310.76,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(Duration(days: 3)),
     ),
     Transaction(
       id: 't2',
       title: 'Conta de luz',
+      descricao: '',
       value: 211.30,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'Conta de agua',
-      value: 100.30,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(Duration(days: 4)),
     ),
   ];
 
-  _addTransaction(String title, double value) {
+  List<Transaction> get _recentTransactions {
+    //return _transactions.where((tr) => tr.date.isAfter(DateTime.now().subtract(Duration(days: 7)))).toList();
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
+
+  _addTransaction(String title, String descricao, double value) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
+      descricao: descricao,
       value: value,
       date: DateTime.now(),
     );
     setState(() {
       _transactions.add(newTransaction);
     });
+    Navigator.of(context)
+        .pop(); // fecha o modal após digitar as informações necessárias (Descrição e Valor)
   }
 
   _openTransactionFormMotal(BuildContext context) {
@@ -69,7 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Despesas Pessoais'),
+        title: Text(
+          'Despesas Pessoais',
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -81,13 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              child: Card(
-                color: Colors.blue,
-                child: Text('Gráfico'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
