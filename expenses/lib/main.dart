@@ -27,6 +27,11 @@ class ExpensesApp extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              button: TextStyle(
+                color: Colors.teal[50],
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+              ),
             ),
         accentTextTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
@@ -34,6 +39,11 @@ class ExpensesApp extends StatelessWidget {
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                   color: Colors.brown),
+              button: TextStyle(
+                color: Colors.teal[50],
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.bold,
+              ),
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
@@ -57,27 +67,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(
-      id: 't0',
-      title: 'Conta antiga',
-      descricao: 'Atual',
-      value: 400.36,
-      date: DateTime.now().subtract(Duration(days: 31)),
-    ),
-    Transaction(
-      id: 't1',
-      title: 'Novo tenis de corrida',
-      descricao: 'compra devido desgasto do tenis atual',
-      value: 310.76,
-      date: DateTime.now().subtract(Duration(days: 3)),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de luz',
-      descricao: '',
-      value: 211.30,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
+    
   ];
 
   List<Transaction> get _recentTransactions {
@@ -89,13 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, String descricao, double value) {
+  _addTransaction(String title, String descricao, double value, DateTime date) {
     final newTransaction = Transaction(
       id: Random().nextDouble().toString(),
       title: title,
       descricao: descricao,
       value: value,
-      date: DateTime.now(),
+      date: date,
     );
     setState(() {
       _transactions.add(newTransaction);
@@ -104,6 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
         .pop(); // fecha o modal após digitar as informações necessárias (Descrição e Valor)
   }
 
+  _removeTransaction(String id){
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
+  }
+
+  // Recebe um context e chama o transactionForm
   _openTransactionFormMotal(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -132,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Chart(_recentTransactions),
-            TransactionList(_transactions),
+            TransactionList(_transactions, _removeTransaction),
           ],
         ),
       ),
