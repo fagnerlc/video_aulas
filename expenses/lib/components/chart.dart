@@ -24,7 +24,7 @@ class Chart extends StatelessWidget {
           if (sameDay && sameMonth && sameYear) {
             totalSum += recentTransaction[i].value;
           }
-          print('$sameDay $sameMonth $sameYear');
+          //print('$sameDay $sameMonth $sameYear');
         }
         //print(DateFormat.E().format(weekDay));
         //print(totalSum);
