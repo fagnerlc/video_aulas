@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
- 
+import 'package:meals/models/category.dart';
+import 'package:meals/screens/categories_meals_screen.dart';
+import 'screens/categories_screen.dart';
+import 'utils/app_routes.dart';
 void main() => runApp(MyApp());
  
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DeliMeals',
+      title: 'Vamos Cozinhar!',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.brown,
+        accentColor:  Colors.tealAccent,
+        fontFamily: 'Raleway',
+        canvasColor: Color.fromRGBO(255, 254, 229, 1),
+        textTheme: ThemeData.light().textTheme.copyWith(
+          headline6: TextStyle(
+            fontSize: 20,
+            fontFamily:'RobotoCondensed',
+          )
+        )
+
       ),
-      home: MyHomePage(),
+      //home: CategoriesScreen(), // = '/' : (ctx) => CategoriesScreen(),
+      routes: {
+        AppRoutes.HOME : (ctx) => CategoriesScreen(),
+        AppRoutes.CATECORIES_MEALS : (ctx) => CategoriesMealsScreen(),
+      },
     );
   }
 }
  
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
- 
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('DeliMeals'),
-      ),
-      body: Center(
-        child: Text('Navegar é preciso!!'),
-      ),
-    );
-  }
-}
