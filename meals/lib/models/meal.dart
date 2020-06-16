@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 
-enum Complexity{
+enum Complexity {
   Simple,
   Medium,
   Difficult,
 }
 
-enum Cost{
-Cheap,
-Fair,
-Expensive,
+enum Cost {
+  Cheap,
+  Fair,
+  Expensive,
 }
 
 class Meal {
@@ -42,4 +42,36 @@ class Meal {
     @required this.complexity,
     @required this.cost,
   });
+
+  String get complexityText {
+    switch (complexity) {
+      case Complexity.Simple:
+        return 'Simples';
+        break;
+      case Complexity.Medium:
+        return 'Normal';
+        break;
+      case Complexity.Difficult:
+        return 'Difícil';
+        break;
+      default:
+        'Desconhecida';
+    }
+  }
+
+  String get costText {
+    switch (cost) {
+      case Cost.Cheap:
+        return 'Barato';
+        break;
+      case Cost.Fair:
+        return 'Justo';
+        break;
+      case Cost.Expensive:
+        return 'Caro';
+        break;
+      default:
+        'Desconhecida';
+    }
+  }
 }
