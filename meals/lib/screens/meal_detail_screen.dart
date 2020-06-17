@@ -4,8 +4,9 @@ import 'package:meals/models/meal.dart';
 class MealDetailScreen extends StatelessWidget {
 
   final Function(Meal) onToggleFavorite;
+  final bool Function(Meal) isFavorite; // significa que a função vai retornar bool e receber um Meal
 
-  const MealDetailScreen(this.onToggleFavorite);
+  const MealDetailScreen(this.onToggleFavorite, this.isFavorite);
 
 
   Widget _createSectionTitle(BuildContext context, String title) {
@@ -94,7 +95,7 @@ class MealDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.star),
+        child: Icon(isFavorite(meal) ? Icons.star : Icons.star_border),
         onPressed: () {
           onToggleFavorite(meal);
         },
