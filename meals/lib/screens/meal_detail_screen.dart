@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meals/models/meal.dart';
 
 class MealDetailScreen extends StatelessWidget {
-
   final Function(Meal) onToggleFavorite;
-  final bool Function(Meal) isFavorite; // significa que a função vai retornar bool e receber um Meal
+  final bool Function(Meal)
+      isFavorite; // significa que a função vai retornar bool e receber um Meal
 
   const MealDetailScreen(this.onToggleFavorite, this.isFavorite);
-
 
   Widget _createSectionTitle(BuildContext context, String title) {
     return Container(
@@ -85,7 +84,7 @@ class MealDetailScreen extends StatelessWidget {
                           meal.steps[idx],
                         ),
                       ),
-                      Divider()
+                      Divider(),
                     ],
                   );
                 },
