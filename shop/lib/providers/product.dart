@@ -7,6 +7,7 @@ class Product with ChangeNotifier{
   final double price;
   final String imageUrl;
   bool isFavorite; // atributo que vai ser modificado
+  bool isShoppingCart;
 
   Product({
     @required this.id,
@@ -15,6 +16,7 @@ class Product with ChangeNotifier{
     @required this.price,
     @required this.imageUrl,
     this.isFavorite = false,
+    this.isShoppingCart = false,
   });
 
 
@@ -23,4 +25,5 @@ class Product with ChangeNotifier{
     isFavorite = !isFavorite;
     notifyListeners(); // notifica todos os interessados quando isFavorite mudar
   }
+
 }
