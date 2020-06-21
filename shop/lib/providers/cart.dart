@@ -7,25 +7,25 @@ class CartItem {
   final String title;
   final int quantity;
   final double prince;
-  bool isShoppingCart;
+  //bool isShoppingCart;
 
   CartItem({
     @required this.id,
     @required this.title,
     @required this.quantity,
     @required this.prince,
-    @required this.isShoppingCart = false,
+    //@required this.isShoppingCart = false,
   });
 }
 
 class Cart with ChangeNotifier {
   Map<String, CartItem> _items = {};
 
-  Map<String, CartItem> get item {
-    return {...item}; // retorna uma cópia de _items
+  Map<String, CartItem> get items {
+    return {..._items}; // retorna uma cópia de _items
   }
 
-  int get itemCount {
+  int get itemsCount {
     return _items.length;
   }
 
