@@ -3,7 +3,15 @@ import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
 import 'package:shop/widgets/cart_item_widget.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
+  
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     final Cart cart = Provider.of(context);
@@ -30,11 +38,15 @@ class CartScreen extends StatelessWidget {
                   ),
                   Chip(
                     backgroundColor: Theme.of(context).primaryColor,
-                    label: Text(
-                      'R\$ ${cart.totalAmount}',
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).primaryTextTheme.headline6.color,
+                    label: Consumer<Cart>(
+                      builder: (_, cart, child) => Text(
+                        'R\$ ${(cart.totalAmount).toStringAsFixed(2)}',
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .primaryTextTheme
+                              .headline6
+                              .color,
+                        ),
                       ),
                     ),
                   ),

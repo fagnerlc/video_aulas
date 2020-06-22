@@ -4,17 +4,20 @@ import 'package:shop/providers/product.dart';
 
 class CartItem {
   final String id;
+  final String productId;
   final String title;
-  final int quantity;
+  int quantity;
   final double prince;
-  //bool isShoppingCart;
+  final bool isShoppingCart;
+
 
   CartItem({
     @required this.id,
+    @required this.productId,
     @required this.title,
     @required this.quantity,
     @required this.prince,
-    //@required this.isShoppingCart = false,
+    @required this.isShoppingCart = false,
   });
 }
 
@@ -29,10 +32,15 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
+  //set quantity ( int quantity){
+  //  this.quantity = quantity;
+  //}
+
   double get totalAmount {
     double total = 0.0;
     _items.forEach((key, valueCartItem) {
       total += valueCartItem.prince * valueCartItem.quantity;
+    //notifyListeners();
     });
     return total;
   }
@@ -42,6 +50,7 @@ class Cart with ChangeNotifier {
       _items.update(product.id, (value) {
         return CartItem(
           id: value.id,
+          productId: product.id,
           title: value.title,
           quantity: value.quantity + 1,
           prince: value.prince,
@@ -52,6 +61,7 @@ class Cart with ChangeNotifier {
         product.id,
         () => CartItem(
           id: Random().nextDouble().toString(),
+          productId: product.id,
           title: product.title,
           prince: product.price,
           quantity: 1,
@@ -61,12 +71,18 @@ class Cart with ChangeNotifier {
 
     
   }
-  void removeItem(Product product) {
-      _items.remove(product.id,);
+  void removeItemCart({bool isShoppingCart, Product product}) {
+      if (product != null) {
+      _items.remove(product.id,);  
+      }   
+      notifyListeners();   
+  }
+    void removeItem(String productId) {
+      _items.remove(productId);   
+      notifyListeners();   
   }
     void toggleShoppingCart(Product product) {
     product.isShoppingCart = !product.isShoppingCart;
-    notifyListeners(); // notifica todos os interessados quando isFavorite mudar
+    notifyListeners(); // notifica todos os interessados quando isShoppingCart mudar
   }
-
 }
