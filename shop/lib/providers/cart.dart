@@ -81,8 +81,14 @@ class Cart with ChangeNotifier {
       _items.remove(productId);   
       notifyListeners();   
   }
-    void toggleShoppingCart(Product product) {
-    product.isShoppingCart = !product.isShoppingCart;
+    void toggleShoppingCart({Product product, String productId}) {
+    if (product != null) {
+    product.isShoppingCart = !product.isShoppingCart;      
+    }
+    if (productId != null) {
+      product.isShoppingCart = !product.isShoppingCart;
+    }
+
     notifyListeners(); // notifica todos os interessados quando isShoppingCart mudar
   }
 }

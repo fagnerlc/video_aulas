@@ -49,7 +49,7 @@ class ProductItem extends StatelessWidget {
               ),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                cart.toggleShoppingCart(product);
+                cart.toggleShoppingCart(product: product);
                 product.isShoppingCart
                     ? 
                     cart.addItem(product)
