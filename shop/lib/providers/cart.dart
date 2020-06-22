@@ -8,7 +8,7 @@ class CartItem {
   final String title;
   int quantity;
   final double prince;
-  final bool isShoppingCart;
+  //final bool isShoppingCart;
 
 
   CartItem({
@@ -17,7 +17,7 @@ class CartItem {
     @required this.title,
     @required this.quantity,
     @required this.prince,
-    @required this.isShoppingCart = false,
+    //@required this.isShoppingCart = false,
   });
 }
 
