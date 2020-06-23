@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
-import 'package:shop/providers/product.dart';
 
 import '../providers/cart.dart';
 
@@ -52,8 +51,7 @@ class CartItemWidget extends StatelessWidget {
             title: Text(cartItem.title),
             subtitle: Text(
                 'Total: R\$ ${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
-            //trailing: Text('${cartItem.quantity}x'),
-            trailing: Container(
+            /*trailing: Container(
               //padding: EdgeInsets.all(3),
               width: 135,
               child: Row(
@@ -91,7 +89,8 @@ class CartItemWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ),*/
+            trailing: Text('${cartItem.quantity}x'),
           ),
         ),
       ),
