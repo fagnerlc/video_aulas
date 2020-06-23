@@ -1,78 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
+import 'package:shop/providers/product.dart';
 
 import '../providers/cart.dart';
 
-class CartItemWidget extends StatefulWidget {
+class CartItemWidget extends StatelessWidget {
   final CartItem cartItem;
 
   CartItemWidget(this.cartItem);
-  @override
-  _CartItemWidgetState createState() => _CartItemWidgetState();
-}
 
-class _CartItemWidgetState extends State<CartItemWidget> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 4,
+    return Dismissible(
+      key: ValueKey(cartItem.id),
+      background: Container(
+        color: Theme.of(context).errorColor,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 40,
+        ),
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 10),
+        margin: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 4,
+        ),
       ),
-      child: Padding(
-        padding: EdgeInsets.all(8),
-        child: ListTile(
-          leading: CircleAvatar(
-            child: Padding(
-              padding: EdgeInsets.all(3),
-              child: FittedBox(                
-                child: Text('R\$ ${widget.cartItem.prince}'),
+      direction: DismissDirection.endToStart,
+      onDismissed: (_) {
+        Provider.of<Cart>(context, listen: false)
+            .removeItem(cartItem.productId);
+      },
+      child: Card(
+        margin: EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 4,
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Padding(
+                padding: EdgeInsets.all(3),
+                child: FittedBox(
+                  child: Text('R\$ ${cartItem.price}'),
+                ),
               ),
             ),
-          ),
-          title: Text(widget.cartItem.title),
-          subtitle: Text(
-              'Total: R\$ ${(widget.cartItem.prince * widget.cartItem.quantity).toStringAsFixed(2)}'),
-          //trailing: Text('${cartItem.quantity}x'),
-          trailing: Container(
-            //padding: EdgeInsets.all(3),
-            width: 135,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_left),
-                  onPressed: () {
-                    setState(() {
-                      if (widget.cartItem.quantity <= 0) {
-                        widget.cartItem.quantity = 0;
+            title: Text(cartItem.title),
+            subtitle: Text(
+                'Total: R\$ ${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
+            //trailing: Text('${cartItem.quantity}x'),
+            trailing: Container(
+              //padding: EdgeInsets.all(3),
+              width: 135,
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_left),
+                    onPressed: () {
+                      //cartItem.quantity > 0 ? cartItem.quantity = cartItem.quantity - 1 : Provider.of<Cart>(context, listen: false).removeItem(cartItem.productId);
+
+                      if (cartItem.quantity <=1) {
+                        cartItem.quantity = cartItem.quantity - 1;
+                        Provider.of<Cart>(context, listen: false)
+                            .removeItem(cartItem.productId);
                       } else {
-                        widget.cartItem.quantity =
-                            widget.cartItem.quantity - 1;
+                        //setState(() {
+                        cartItem.quantity = cartItem.quantity - 1;
+                        //});
                       }
-                    });
-                  },
-                ),
-                Container(
-                  //padding: const EdgeInsets.all(1),
-                  child: Container(
+                    },
+                  ),
+                  Container(
                     height: 27,
                     width: 39,
                     child: FittedBox(
-                      child: Text('${widget.cartItem.quantity}x'),
+                      child: Text('${cartItem.quantity}x'),
                     ),
                   ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.arrow_right),
-                  onPressed: () {
-                    setState(() {
-                      widget.cartItem.quantity = widget.cartItem.quantity + 1;
-                      //(cart.totalAmount).toStringAsFixed(2);
-                    });
-                  },
-                ),
-              ],
+                  IconButton(
+                    icon: Icon(Icons.arrow_right),
+                    onPressed: () {
+                      //setState(() { // transformar em statfull para funcionar
+                      cartItem.quantity = cartItem.quantity + 1;
+                      //});
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

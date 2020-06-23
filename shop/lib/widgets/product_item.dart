@@ -49,12 +49,12 @@ class ProductItem extends StatelessWidget {
               ),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                cart.toggleShoppingCart(product: product);
+                cart.toggleShoppingCart(product);
                 product.isShoppingCart
                     ? 
                     cart.addItem(product)
                     : 
-                    cart.removeItemCart(product: product);
+                    cart.removeItemCart(product);
               },
             ),
           ),

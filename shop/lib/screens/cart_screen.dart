@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
+import 'package:shop/providers/pedidos.dart';
+import 'package:shop/utils/app_routes.dart';
 import 'package:shop/widgets/cart_item_widget.dart';
 
 class CartScreen extends StatefulWidget {
-  
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     final Cart cart = Provider.of(context);
@@ -52,9 +51,16 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   Spacer(),
                   FlatButton(
-                    onPressed: () {},
                     child: Text('COMPRAR'),
                     textColor: Theme.of(context).primaryColor,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.PEDIDOS);
+                      Provider.of<Pedidos>(context, listen: false).addPedido(
+                          //cartItems, //1
+                          //cart.totalAmount, //1
+                          cart);
+                      cart.clear();
+                    },
                   ),
                 ],
               ),
