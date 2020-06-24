@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/providers/cart.dart';
-import 'package:shop/providers/product.dart';
-import 'package:shop/utils/app_routes.dart';
+import '../providers/product.dart';
+import '../providers/cart.dart';
+import '../utils/app_routes.dart';
 
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Product product = Provider.of<Product>(context, listen: false);
-    //final Cart cart = Provider.of<Cart>(context, listen: false);
+    final Cart cart = Provider.of<Cart>(context, listen: false);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -27,37 +28,25 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: Consumer<Product>(
-            // consumer substitui o provider.of
             builder: (ctx, product, _) => IconButton(
               icon: Icon(
-                product.isFavorite ? Icons.favorite : Icons.favorite_border,
-              ),
+                  product.isFavorite ? Icons.favorite : Icons.favorite_border),
               color: Theme.of(context).accentColor,
-              onPressed: () => product.toggleFavorite(),
+              onPressed: () {
+                product.toggleFavorite();
+              },
             ),
           ),
           title: Text(
             product.title,
             textAlign: TextAlign.center,
           ),
-          trailing: Consumer<Cart>(
-            builder: (ctx, cart, _) => IconButton(
-              icon: Icon(
-                product.isShoppingCart
-                    ? Icons.shopping_cart
-                    : Icons.add_shopping_cart,
-              ),
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                cart.toggleShoppingCart(product);
-                product.isShoppingCart
-                    ? 
-                    cart.addItem(product)
-                    : 
-                    cart.removeItemCart(product);
-                    
-              },
-            ),
+          trailing: IconButton(
+            icon: Icon(Icons.shopping_cart),
+            color: Theme.of(context).accentColor,
+            onPressed: () {
+              cart.addItem(product);
+            },
           ),
         ),
       ),

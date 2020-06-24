@@ -31,7 +31,6 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
-  
   double get totalAmount {
     double total = 0.0;
     _items.forEach((key, valueCartItem) {
@@ -39,6 +38,18 @@ class Cart with ChangeNotifier {
       //notifyListeners();// se colocar da merda aqui
     });
     return total;
+  }
+
+  void removeUnidade(Product product) {
+    _items.update(product.id, (value) {
+      return CartItem(
+        id: value.id,
+        productId: value.productId,
+        title: value.title,
+        quantity: value.quantity -1,
+        price: value.price,
+      );
+    });
   }
 
   void addItem(Product product) {
@@ -64,6 +75,7 @@ class Cart with ChangeNotifier {
         ),
       );
     }
+    //notifyListeners();
   }
 
   void removeItemCart(Product product) {
@@ -88,7 +100,7 @@ class Cart with ChangeNotifier {
     //notifyListeners(); // notifica todos os interessados quando isShoppingCart mudar
   }
 
-  void clear(){
+  void clear() {
     _items = {};
     notifyListeners();
   }

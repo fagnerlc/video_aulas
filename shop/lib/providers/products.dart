@@ -5,11 +5,16 @@ import 'package:shop/providers/product.dart';
 class Products with ChangeNotifier {
   List<Product> _items = DUMMY_PRODUCTS;
 
-  List<Product> get items =>[..._items];
+  List<Product> get items => [..._items];
+  
   List<Product> get favotiteItems {
     return _items.where((element) => element.isFavorite).toList();
   }
 
+  void addProduct(Product product) {
+    _items.add(product);
+    notifyListeners();
+  }
   // inicio gerenciamento de forma global
   //bool _showFavoriteOnly = false;
   //List<Product> get items {
@@ -17,7 +22,7 @@ class Products with ChangeNotifier {
   //    return _items.where((element) => element.isFavorite).toList();
   //  } else {
   //    return [..._items];// [] nesse caso gera uma cópia da lista _items
-  //  } 
+  //  }
   //}
 
   //void showFavoriteOnly(){
@@ -31,8 +36,4 @@ class Products with ChangeNotifier {
   //}
   // fim gerenciamento de forma global
 
-  void addProduct(Product product) {
-    _items.add(product);
-    notifyListeners();
-  }
 }

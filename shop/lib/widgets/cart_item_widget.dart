@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/providers/cart.dart';
-
+import 'package:shop/providers/product.dart';
 import '../providers/cart.dart';
 
-class CartItemWidget extends StatelessWidget {
+class CartItemWidget extends StatefulWidget {
   final CartItem cartItem;
 
   CartItemWidget(this.cartItem);
 
+
+  @override
+  _CartItemWidgetState createState() => _CartItemWidgetState();
+}
+
+class _CartItemWidgetState extends State<CartItemWidget> {
+  //final Product product = Provider.of<Product>(context, listen: false);
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(cartItem.id),
+      key: ValueKey(widget.cartItem.id),
       background: Container(
         color: Theme.of(context).errorColor,
         child: Icon(
@@ -30,7 +38,7 @@ class CartItemWidget extends StatelessWidget {
       direction: DismissDirection.endToStart,
       onDismissed: (_) {
         Provider.of<Cart>(context, listen: false)
-            .removeItem(cartItem.productId);
+            .removeItem(widget.cartItem.productId);
       },
       child: Card(
         margin: EdgeInsets.symmetric(
@@ -44,14 +52,14 @@ class CartItemWidget extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(3),
                 child: FittedBox(
-                  child: Text('R\$ ${cartItem.price}'),
+                  child: Text('R\$ ${widget.cartItem.price}'),
                 ),
               ),
             ),
-            title: Text(cartItem.title),
+            title: Text(widget.cartItem.title),
             subtitle: Text(
-                'Total: R\$ ${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
-            /*trailing: Container(
+                'Total: R\$ ${(widget.cartItem.price * widget.cartItem.quantity).toStringAsFixed(2)}'),
+            trailing: Container(
               //padding: EdgeInsets.all(3),
               width: 135,
               child: Row(
@@ -61,14 +69,17 @@ class CartItemWidget extends StatelessWidget {
                     onPressed: () {
                       //cartItem.quantity > 0 ? cartItem.quantity = cartItem.quantity - 1 : Provider.of<Cart>(context, listen: false).removeItem(cartItem.productId);
 
-                      if (cartItem.quantity <=1) {
-                        cartItem.quantity = cartItem.quantity - 1;
+                      if (widget.cartItem.quantity <=1) {
+                        widget.cartItem.quantity = widget.cartItem.quantity - 1;
+                        
                         Provider.of<Cart>(context, listen: false)
-                            .removeItem(cartItem.productId);
+                            .removeItem(widget.cartItem.productId);
+                        //Provider.of<Cart>(context, listen: false).toggleShoppingCart(Provider.of<Product>(context));
                       } else {
-                        //setState(() {
-                        cartItem.quantity = cartItem.quantity - 1;
-                        //});
+                        setState(() {
+                        widget.cartItem.quantity = widget.cartItem.quantity - 1;
+                        
+                        });
                       }
                     },
                   ),
@@ -76,21 +87,23 @@ class CartItemWidget extends StatelessWidget {
                     height: 27,
                     width: 39,
                     child: FittedBox(
-                      child: Text('${cartItem.quantity}x'),
+                      child: Text('${widget.cartItem.quantity}x'),
                     ),
                   ),
                   IconButton(
                     icon: Icon(Icons.arrow_right),
                     onPressed: () {
-                      //setState(() { // transformar em statfull para funcionar
-                      cartItem.quantity = cartItem.quantity + 1;
-                      //});
+                      setState(() { // transformar em statfull para funcionar
+
+                      widget.cartItem.quantity = widget.cartItem.quantity + 1;
+                      //Provider.of<Cart>(context, listen: false).addItem(Provider.of<Product>(context));
+                      });
                     },
                   ),
                 ],
               ),
-            ),*/
-            trailing: Text('${cartItem.quantity}x'),
+            ),
+            //trailing: Text('${cartItem.quantity}x'),
           ),
         ),
       ),

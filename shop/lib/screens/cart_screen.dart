@@ -37,17 +37,16 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                   Chip(
                     backgroundColor: Theme.of(context).primaryColor,
-                    label: Consumer<Cart>(
-                      builder: (_, cart, child) => Text(
-                        'R\$ ${(cart.totalAmount).toStringAsFixed(2)}',
+                    label: Text(
+                        //'R\$ ${(cart.totalAmount).toStringAsFixed(2)}',
+                        'R\$ ${Provider.of<Cart>(context, listen: false).totalAmount}',
                         style: TextStyle(
                           color: Theme.of(context)
                               .primaryTextTheme
                               .headline6
                               .color,
                         ),
-                      ),
-                    ),
+                      ),                    
                   ),
                   Spacer(),
                   FlatButton(
