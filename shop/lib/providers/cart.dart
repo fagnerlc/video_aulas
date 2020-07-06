@@ -40,16 +40,24 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  void removeUnidade(Product product) {
-    _items.update(product.id, (value) {
-      return CartItem(
-        id: value.id,
-        productId: value.productId,
-        title: value.title,
-        quantity: value.quantity -1,
-        price: value.price,
-      );
-    });
+  void removeUnidade(productId) {
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    if (_items[productId].quantity == 1) {
+      _items.remove(productId);
+    } else {
+      _items.update(productId, (value) {
+        return CartItem(
+          id: value.id,
+          productId: value.productId,
+          title: value.title,
+          quantity: value.quantity - 1,
+          price: value.price,
+        );
+      });
+    }
+    notifyListeners();
   }
 
   void addItem(Product product) {

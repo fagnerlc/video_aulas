@@ -39,7 +39,7 @@ class _CartScreenState extends State<CartScreen> {
                     backgroundColor: Theme.of(context).primaryColor,
                     label: Text(
                         //'R\$ ${(cart.totalAmount).toStringAsFixed(2)}',
-                        'R\$ ${Provider.of<Cart>(context, listen: false).totalAmount}',
+                        'R\$ ${Provider.of<Cart>(context, listen: false).totalAmount.toStringAsFixed(2)}',
                         style: TextStyle(
                           color: Theme.of(context)
                               .primaryTextTheme
