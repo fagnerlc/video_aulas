@@ -31,7 +31,7 @@ class Pedidos with ChangeNotifier {
   }
 
   //void addPedido(List<CartItem> products, double total) { //1
-    void addPedido(Cart cart) {
+  void addPedido(Cart cart) {
     //final combine = (previousTotal, element) =>
     //    previousTotal + (element.price * element.quantity);
     //final total = products.fold(0.0, combine);
@@ -45,7 +45,6 @@ class Pedidos with ChangeNotifier {
         //products: products, //1
         products: cart.items.values.toList(),
       ),
-
     );
     notifyListeners();
   }

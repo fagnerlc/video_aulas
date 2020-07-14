@@ -117,7 +117,6 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                     onPressed: () {
                       setState(() {
                         // transformar em statfull para funcionar
-
                         widget.cartItem.quantity = widget.cartItem.quantity + 1;
                         //Provider.of<Cart>(context, listen: false).addItem(Provider.of<Product>(context));
                       });
