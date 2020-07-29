@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop/utils/constantes.dart';
 
 class Product with ChangeNotifier {
   final String id;
@@ -31,7 +32,7 @@ class Product with ChangeNotifier {
     _toggleFavorite();
     // o ideal é criar um arquivo separado com as variáveis constantes
     try {
-      final _url = 'https://teste-0749.firebaseio.com/products/$id.json';
+      final _url = 'h${Constantes.BASE_API_URL}/products/$id.json';
       final response = await http.patch(
         _url,
         body: json.encode({

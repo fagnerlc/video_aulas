@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/exceptions/http_exception.dart';
 import 'package:shop/providers/product.dart';
+import 'package:shop/utils/constantes.dart';
 
 // Tem o objetivo de encapsular a lista das Fazendas
 // ChangeNotifier = notifica todos os interessandos quando haver mudança
 class Products with ChangeNotifier {
   // o ideal é criar um arquivo separado com as variáveis constantes
-  final String _baseUrl = 'https://teste-0749.firebaseio.com/products';
+  final String _baseUrl = '${Constantes.BASE_API_URL}/products';
   List<Product> _items = [];
 
   //[..._items] = retorna uma cópia de items para não aletrar o valor original = melhor prática

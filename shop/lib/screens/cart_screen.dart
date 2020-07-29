@@ -11,6 +11,7 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final Cart cart = Provider.of(context);
@@ -38,28 +39,37 @@ class _CartScreenState extends State<CartScreen> {
                   Chip(
                     backgroundColor: Theme.of(context).primaryColor,
                     label: Text(
-                        //'R\$ ${(cart.totalAmount).toStringAsFixed(2)}',
-                        'R\$ ${Provider.of<Cart>(context, listen: false).totalAmount.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          color: Theme.of(context)
-                              .primaryTextTheme
-                              .headline6
-                              .color,
-                        ),
-                      ),                    
+                      //'R\$ ${(cart.totalAmount).toStringAsFixed(2)}',
+                      'R\$ ${Provider.of<Cart>(context, listen: false).totalAmount.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color:
+                            Theme.of(context).primaryTextTheme.headline6.color,
+                      ),
+                    ),
                   ),
                   Spacer(),
                   FlatButton(
-                    child: Text('COMPRAR'),
+                    child: isLoading
+                        ? CircularProgressIndicator()
+                        : Text('COMPRAR'),
                     textColor: Theme.of(context).primaryColor,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(AppRoutes.PEDIDOS);
-                      Provider.of<Pedidos>(context, listen: false).addPedido(
-                          //cartItems, //1
-                          //cart.totalAmount, //1
-                          cart);
-                      cart.clear();
-                    },
+                    onPressed: cart.totalAmount == 0
+                        ? null
+                        : () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            await Provider.of<Pedidos>(context, listen: false)
+                                .addPedido(
+                                    //cartItems, //1
+                                    //cart.totalAmount, //1
+                                    cart);
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.of(context).pushNamed(AppRoutes.PEDIDOS);
+                            cart.clear();
+                          },
                   ),
                 ],
               ),
