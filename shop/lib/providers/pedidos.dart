@@ -23,7 +23,9 @@ class Pedido {
 class Pedidos with ChangeNotifier {
   final String _baseUrl = '${Constantes.BASE_API_URL}/pedidos';
   List<Pedido> _itemsPedidos = [];
-
+  String _token;
+  String _userId;
+  Pedidos([this._token, this._userId, this._itemsPedidos = const []]);
   List<Pedido> get itemsPedidos {
     return [..._itemsPedidos];
   }
@@ -34,7 +36,7 @@ class Pedidos with ChangeNotifier {
 
   Future<void> loadPedidos() async {
     List<Pedido> loadedItems = [];
-    final response = await http.get("$_baseUrl.json");
+    final response = await http.get("$_baseUrl/$_userId.json?auth=$_token");
     Map<String, dynamic> data = json.decode(response.body);
 
     print(data);
@@ -72,7 +74,7 @@ class Pedidos with ChangeNotifier {
     //final total = products.fold(0.0, combine);
     final date = DateTime.now();
     final response = await http.post(
-      "$_baseUrl.json",
+      "$_baseUrl/$_userId.json?auth=$_token",
       body: json.encode({
         'total': cart.totalAmount,
         'date': date
