@@ -1,84 +1,100 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MaterialApp(
+      title: 'Criar Clock',
+      home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
+    ));
 
-/// This Widget is the main application widget.
-class MyApp extends StatelessWidget {
-  static const String _title = 'Flutter Code Sample';
-
+class HomeScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
+  State<StatefulWidget> createState() {
+    return HomeScreenState();
   }
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  MyStatefulWidget({Key key}) : super(key: key);
+class HomeScreenState extends State<HomeScreen> {
+  double seconds;
+
+  _currentTime() {
+    return "${DateTime.now().hour} : ${DateTime.now().minute}";
+  }
+
+  _triggerUpdate() {
+    Timer.periodic(
+        Duration(seconds: 1),
+        (Timer timer) => setState(
+              () {
+                seconds = DateTime.now().second / 60;
+              },
+            ));
+  }
 
   @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Teste',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  void initState() {
+    super.initState();
+    seconds = DateTime.now().second / 60;
+    _triggerUpdate();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
+      body: Container(
+        color: hexToColor('#E3E3ED'),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              Center(
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: hexToColor('#2c3143'),
+                  ),
+                ),
+              ),
+              Center(
+                child: Container(
+                    margin: const EdgeInsets.all(36.0),
+                    width: 340,
+                    height: 340,
+                    child: Center(
+                      child: Text(
+                        _currentTime(),
+                        style: GoogleFonts.bungee(
+                            fontSize: 60.0,
+                            textStyle: TextStyle(color: Colors.white),
+                            fontWeight: FontWeight.normal),
+                      ),
+                    )),
+              ),
+              Center(
+                child: CircularPercentIndicator(
+                  radius: 250.0,
+                  lineWidth: 6.0,
+                  animation: true,
+                  percent: seconds,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  backgroundColor: hexToColor('#2c3143'),
+                  progressColor: hexToColor('#58CBF4'),
+                ),
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Business'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('School'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        ),
       ),
     );
   }
+}
+
+Color hexToColor(String code) {
+  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
