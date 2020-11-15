@@ -1,100 +1,70 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:device_info/device_info.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:rxdart/subjects.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
-void main() => runApp(MaterialApp(
-      title: 'Criar Clock',
-      home: HomeScreen(),
-      debugShowCheckedModeBanner: false,
-    ));
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return HomeScreenState();
-  }
+/// Streams are created so that app can respond to notification-related events
+/// since the plugin is initialised in the `main` function
+final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
+    BehaviorSubject<ReceivedNotification>();
+
+final BehaviorSubject<String> selectNotificationSubject =
+    BehaviorSubject<String>();
+
+const MethodChannel platform =
+    MethodChannel('dexterx.dev/flutter_local_notifications_example');
+
+class ReceivedNotification {
+  ReceivedNotification({
+    @required this.id,
+    @required this.title,
+    @required this.body,
+    @required this.payload,
+  });
+
+  final int id;
+  final String title;
+  final String body;
+  final String payload;
 }
 
-class HomeScreenState extends State<HomeScreen> {
-  double seconds;
+/// IMPORTANT: running the following code on its own won't work as there is
+/// setup required for each platform head project.
+///
+/// Please download the complete example app from the GitHub repository where
+/// all the setup has been done
 
-  _currentTime() {
-    return "${DateTime.now().hour} : ${DateTime.now().minute}";
-  }
+void main() => runApp(new MyApp());
 
-  _triggerUpdate() {
-    Timer.periodic(
-        Duration(seconds: 1),
-        (Timer timer) => setState(
-              () {
-                seconds = DateTime.now().second / 60;
-              },
-            ));
-  }
-
+class MyApp extends StatefulWidget {
   @override
-  void initState() {
-    super.initState();
-    seconds = DateTime.now().second / 60;
-    _triggerUpdate();
-  }
+  _MyAppState createState() => new _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: hexToColor('#E3E3ED'),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: Stack(
-            children: <Widget>[
-              Center(
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: hexToColor('#2c3143'),
-                  ),
-                ),
-              ),
-              Center(
-                child: Container(
-                    margin: const EdgeInsets.all(36.0),
-                    width: 340,
-                    height: 340,
-                    child: Center(
-                      child: Text(
-                        _currentTime(),
-                        style: GoogleFonts.bungee(
-                            fontSize: 60.0,
-                            textStyle: TextStyle(color: Colors.white),
-                            fontWeight: FontWeight.normal),
-                      ),
-                    )),
-              ),
-              Center(
-                child: CircularPercentIndicator(
-                  radius: 250.0,
-                  lineWidth: 6.0,
-                  animation: true,
-                  percent: seconds,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  backgroundColor: hexToColor('#2c3143'),
-                  progressColor: hexToColor('#58CBF4'),
-                ),
-              )
-            ],
-          ),
+    return new MaterialApp(
+      home: new Scaffold(
+        appBar: new AppBar(
+          title: const Text('Plugin example app'),
         ),
+        body: new Center(),
       ),
     );
   }
-}
-
-Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

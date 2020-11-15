@@ -36,6 +36,10 @@ dependencies:
   shared_preferences: ^0.5.10
   google_fonts: ^0.3.2
   percent_indicator: ^2.1.1+1
+  flutter_local_notifications: ^3.0.1
+  rxdart: ^0.24.1
+  device_info: ^0.4.2+9
+  alarmclock: ^0.0.2
 
 dev_dependencies:
   flutter_test:
