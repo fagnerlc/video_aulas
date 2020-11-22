@@ -6,7 +6,23 @@ class CmailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Título da página atual!'),
+        actions: [
+          Icon(Icons.search),
+          Container(
+            width: 250,
+            child: TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Filtrar e-mails...',
+                fillColor: Colors.white,
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
+              ),
+              cursorColor: Colors.white,
+            ),
+          ),
+        ],
       ),
       drawer: AppDrawer(),
     );

@@ -6,7 +6,7 @@ class User {
   User.fromDocument(DocumentSnapshot document) {
     id = document.documentID;
     name = document.data['name'] as String;
-    email = document.data['name'] as String;
+    email = document.data['email'] as String;
   }
 
   String id;

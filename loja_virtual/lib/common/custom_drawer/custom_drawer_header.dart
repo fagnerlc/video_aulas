@@ -9,13 +9,14 @@ class CustomDrawerHeader extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(32, 24, 16, 8),
         height: 180,
         child: Consumer<UserManager>(
+          // _ = Context, objeto = userManager, __ = child
           builder: (_, userManager, __) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Loja do\nFagner',
+                  'Loja do \nFagner',
                   style: TextStyle(
                     fontSize: 34,
                     fontWeight: FontWeight.bold,
@@ -42,7 +43,7 @@ class CustomDrawerHeader extends StatelessWidget {
                     }
                   },
                   child: Text(
-                    userManager.isLoggedIn ? 'Sair' : 'Entre ou cadastre-se',
+                    userManager.isLoggedIn ? 'Sair' : 'Entre ou cadastre-se >',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16,

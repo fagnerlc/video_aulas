@@ -8,8 +8,15 @@ class AppDrawer extends StatelessWidget {
         children: [
           AppBar(
             centerTitle: true,
-            title: Text(
-              'Seja bem vindo!',
+            title: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.dehaze),
+                ),
+              ],
             ),
             automaticallyImplyLeading: false,
           ),

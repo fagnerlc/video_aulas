@@ -20,11 +20,6 @@ class UserManager extends ChangeNotifier {
 
   bool get isLoggedIn => user != null;
 
-  set loading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
-
   Future<void> signIn({User user, Function onFail, Function onSuccess}) async {
     loading = true;
     try {
@@ -66,9 +61,13 @@ class UserManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   Future<void> _loadCurrentUser({FirebaseUser firebaseUser}) async {
     final FirebaseUser currentUser = firebaseUser ?? await auth.currentUser();
-
     if (currentUser != null) {
       final DocumentSnapshot docUser =
           await firestore.collection('users').document(currentUser.uid).get();

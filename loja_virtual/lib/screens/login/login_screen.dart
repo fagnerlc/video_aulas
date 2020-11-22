@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
               // pushReplacementNamed substitui uma tela por outra
               Navigator.of(context).pushReplacementNamed('/signup');
             },
-            child: Text('CRIAR CONTA'),
+            child: const Text('CRIAR CONTA'),
             textColor: Colors.white,
           ),
         ],
@@ -102,7 +102,6 @@ class LoginScreen extends StatelessWidget {
                                               content:
                                                   Text('Falha ao entrar: $e'),
                                               backgroundColor: Colors.redAccent,
-                                              duration: Duration(seconds: 7),
                                             ),
                                           );
                                         },
@@ -117,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                                 Theme.of(context).primaryColor.withAlpha(100),
                             textColor: Colors.white,
                             child: userManager.loading
-                                ? CircularProgressIndicator(
+                                ? const CircularProgressIndicator(
                                     valueColor:
                                         AlwaysStoppedAnimation(Colors.white),
                                   )
