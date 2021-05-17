@@ -12,7 +12,9 @@ class RemoteAuthentication {
     @required this.url,
   });
 
-  Future<void> auth() async {}
+  Future<void> auth() async {
+    await httpClient.request(url: url);
+  }
 }
 
 abstract class HttpClient {
