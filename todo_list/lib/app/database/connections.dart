@@ -7,7 +7,7 @@ import 'package:todo_list/app/database/migrations/migration_v2.dart';
 
 class Connection {
   static const VERSION = 1;
-  static const DATABASE_NAME = 'TODO_LIST';
+  static const DATABASE_NAME = 'TODO_LIST4';
   static Connection _instance;
   Database _db;
   final _lock = Lock();
