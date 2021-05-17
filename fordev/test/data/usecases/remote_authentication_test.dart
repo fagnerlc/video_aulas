@@ -25,7 +25,7 @@ abstract class HttpClient {
 
 class HttpClientSpy extends Mock implements HttpClient {}
 
-void main(List<String> args) {
+void main() {
   test('Should call HttpClient with correct URL', () async {
     final httpClient = HttpClientSpy();
     final url = faker.internet.httpUrl();
