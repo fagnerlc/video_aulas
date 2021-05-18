@@ -21,4 +21,4 @@
 1. :white_check_mark: Sistema retorna uma mensagem de erro inesperado
 
 >## Exeção - Credenciais inválidas
-1. Sistema retorna uma mensagem de erro informando que as credenciais estão erradas
+1. :white_check_mark: Sistema retorna uma mensagem de erro informando que as credenciais estão erradas
