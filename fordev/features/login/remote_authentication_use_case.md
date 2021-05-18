@@ -9,7 +9,7 @@
 
 
 > ## Exeção - URL inválida
-1. Sistema retorna uma mensagem de erro inesperado
+1. :white_check_mark: Sistema retorna uma mensagem de erro inesperado
 
 >## Exeção - Dados inválidos
 1. :white_check_mark: Sistema retorna uma mensagem de erro inesperado
