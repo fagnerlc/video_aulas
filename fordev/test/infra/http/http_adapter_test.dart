@@ -7,12 +7,20 @@ import 'package:http/http.dart';
 class HttpAdapter {
   final Client client;
   HttpAdapter(this.client);
+
   Future<void> request({
     @required String url,
     @required String method,
     Map body,
   }) async {
-    await client.post(Uri.parse(url));
+    final headers = {
+      'content-type': 'application/json',
+      'accept': 'application/json',
+    };
+    await client.post(
+      Uri.parse(url),
+      headers: headers,
+    );
   }
 }
 
@@ -25,7 +33,15 @@ void main() {
       final sut = HttpAdapter(client);
       final url = faker.internet.httpUrl();
       await sut.request(url: url, method: 'post');
-      verify(client.post(Uri.parse(url)));
+      verify(
+        client.post(
+          Uri.parse(url),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+          },
+        ),
+      );
     });
   });
 }
