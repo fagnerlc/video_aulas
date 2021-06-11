@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:faker/faker.dart';
 import 'package:meta/meta.dart';
 import 'package:mockito/mockito.dart';
@@ -17,10 +19,7 @@ class HttpAdapter {
       'content-type': 'application/json',
       'accept': 'application/json',
     };
-    await client.post(
-      Uri.parse(url),
-      headers: headers,
-    );
+    await client.post(Uri.parse(url), headers: headers, body: jsonEncode(body));
   }
 }
 
@@ -37,16 +36,14 @@ void main() {
   });
   group('post', () {
     test('Should call post with correct values', () async {
-      await sut.request(url: url, method: 'post');
-      verify(
-        client.post(
-          Uri.parse(url),
+      await sut
+          .request(url: url, method: 'post', body: {'any_key': 'any_value'});
+      verify(client.post(Uri.parse(url),
           headers: {
             'content-type': 'application/json',
             'accept': 'application/json',
           },
-        ),
-      );
+          body: '{"any_key":"any_value"}'));
     });
   });
 }
