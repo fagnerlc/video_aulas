@@ -5,7 +5,7 @@
 2. :white_check_mark: Passar nos headers o content type JSON
 3. :white_check_mark: Chamar request com body correto
 4. :white_check_mark: Ok - 200 e resposta com dados
-5. :: No content - 204 e resposta sem dados
+5. :white_check_mark: No content - 204 e resposta sem dados
 
 > ## Erros
 1. :: Bad request - 400
