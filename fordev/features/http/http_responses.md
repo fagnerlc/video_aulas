@@ -11,7 +11,7 @@
 1. :white_check_mark: Bad request - 400
 2. :white_check_mark: Unauthorized - 401
 3. :white_check_mark: Forbidden - 403
-4. :: Not found - 404
+4. :white_check_mark: Not found - 404
 5. :white_check_mark: Internal server error - 500
 
 > ## Exceção - Status code diferente dos citados acima
