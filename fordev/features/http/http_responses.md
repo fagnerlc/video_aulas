@@ -1,7 +1,7 @@
 #HTTP
 
 > ## Sucesso
-1. :white_check_mark: Request com verbo http válido (post)
+1. :white_check_mark: Request com verbo http válido (post/...)
 2. :white_check_mark: Passar nos headers o content type JSON
 3. :white_check_mark: Chamar request com body correto
 4. :white_check_mark: Ok - 200 e resposta com dados
@@ -18,7 +18,7 @@
 1. :white_check_mark: Internal server error - 500
 
 > ## Exceção - Http request deu alguma exceção
-1. :: Internal server error - 500
+1. :white_check_mark: Internal server error - 500
 
 > ## Exceção - Verbo http inválido
 1. :white_check_mark: Internal server error - 500
