@@ -9,7 +9,7 @@
 
 > ## Erros
 1. :white_check_mark: Bad request - 400
-2. :: Unauthorized - 401
+2. :white_check_mark: Unauthorized - 401
 3. :: Forbidden - 403
 4. :: Not found - 404
 5. :white_check_mark: Internal server error - 500
