@@ -10,7 +10,7 @@
 7. :white_check_mark: Validar senha quando o usuário digitar no campo
 8. :white_check_mark: Mostrar mensagem de erro se a senha for inválida
 9. :white_check_mark: Remover mensagem de erro se a senha for válida
-10. :: Habilitar o botão de fazer login se todos os campos forem válidos
+10. :white_check_mark: Habilitar o botão de fazer login se todos os campos forem válidos
 11. :: Desabilitar o botão de fazer login se algum campo for inválido
 12. :: Exibir loading no início da ação de login
 13. :: Autenticar usuário com email e senha informados no formulário
