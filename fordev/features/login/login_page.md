@@ -15,5 +15,5 @@
 12. :white_check_mark: Exibir loading no início da ação de login
 13. :white_check_mark: Chamar o método de autenticar
 14. :: Exibir mensagem de erro caso o login falhe
-15. :: Esconder loading no fim da ação de login
+15. :white_check_mark: Esconder loading no fim da ação de login
 16. :: Fechar streams quando a página for encerrada
