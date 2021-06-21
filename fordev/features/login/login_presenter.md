@@ -2,7 +2,7 @@
 
 ## Regras
 1. :white_check_mark: Chamar Validation ao alterar o email
-2. :: Notificar o emailErrorStream com o mesmo erro do Validation, caso retorne erro
+2. :white_check_mark: Notificar o emailErrorStream com o mesmo erro do Validation, caso retorne erro
 3. :: Notificar o emailErrorEtream com null, caso o Validation não retorne erro
 4. :: Não notificar o isFormValidStream se o valor for igual ao último
 5. :: Notificar o isFormValidStream após alterar o email
