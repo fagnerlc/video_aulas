@@ -11,7 +11,7 @@
 8. :white_check_mark: Notificar o passwordErrorStream com null, caso a Validação não retorne erro
 9. :white_check_mark: Não notificar o passwordErrorStream se o valor for igual ao último
 10. :white_check_mark: Notificar o isFormValidStream após alterar a senha
-11. :: Para o firmulçário estar válido todos os Streams de erro precisam estar null e todos os campos obrigatórios não podem estar vazios
+11. :white_check_mark: Para o formulário estar válido todos os Streams de erro precisam estar null e todos os campos obrigatórios não podem estar vazios
 12. :white_check_mark: Não notificar o isFormValidStream se o valor for igual ao último
 13. :: Chamar o Authentication com email e senha corretos
 14. :: Notificar o isLoadingStream como true antes de chamar o Authentication
