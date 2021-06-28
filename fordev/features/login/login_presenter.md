@@ -17,6 +17,6 @@
 14. :white_check_mark: Notificar o isLoadingStream como true antes de chamar o Authentication
 15. :white_check_mark: Notificar o isLoadingStream como false no fim do Authentication
 16. :white_check_mark: Notificar o mainErrorStream caso o Authentication retorne um DomainError
-17. :: Fechar todos os Streams no dispose
+17. :white_check_mark: Fechar todos os Streams no dispose
 18. :: :no_entry: Gravar o Account no cache em caso de sucesso
 19. :: :no_entry: Levar o usuário pra tela de Enquetes em caso de sucesso
