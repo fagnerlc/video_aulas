@@ -25,4 +25,9 @@ void main() {
     sut.validate('');
     expect(sut.validate(null), null);
   });
+
+  test('Should return null if email is valid', () {
+    sut.validate('');
+    expect(sut.validate('fagnerlc@gmail.com'), null);
+  });
 }
