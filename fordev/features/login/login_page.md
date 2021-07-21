@@ -1,9 +1,9 @@
 # Login Page
 
 ## Regras
-1. :white_check_mark: Os campos devem começar sem exibir mensagem de erro
+1. :white_check_mark: Os campos devem começar sem exibir mensagem de erro✅
 2. :white_check_mark: O botão de fazer login deve começar desabilitado
-3. :white_check_mark: Após digitar algo em um campo, a mensagem de erro só deve sumir se o campo for válido
+3. :white_check_mark: Após digitar algo em um campo, a mensagem de erro só deve sumir se o campo for válido ✔️
 4. :white_check_mark: Validar email quando o usuário digitar no campo
 5. :white_check_mark: Mostrar mensagem de erro se o email for inválido
 6. :white_check_mark: Remover mensagem de erro se o email for válido
