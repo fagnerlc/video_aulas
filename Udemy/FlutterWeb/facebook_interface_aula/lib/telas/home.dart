@@ -1,4 +1,7 @@
+import 'package:facebook_interface_aula/componentes/area_criar_postagem.dart';
+import 'package:facebook_interface_aula/componentes/area_estoria.dart';
 import 'package:facebook_interface_aula/componentes/botao_circulo.dart';
+import 'package:facebook_interface_aula/dados/dados.dart';
 import 'package:facebook_interface_aula/uteis/paleta_cores.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
@@ -17,8 +20,8 @@ class _HomeState extends State<Home> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Colors.orange,
-            expandedHeight: 250,
+            backgroundColor: Colors.white,
+            //expandedHeight: 250,
             floating: true,
             centerTitle: false,
             title: const Text(
@@ -43,8 +46,17 @@ class _HomeState extends State<Home> {
             ],
           ),
           SliverToBoxAdapter(
+            child: AreaCriarPostagem(usuario: usuarioAtual),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+            sliver: SliverToBoxAdapter(
+              child: AreaEstoria(usuario: usuarioAtual, estorias: estorias),
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Container(
-              color: Colors.black45,
+              color: Colors.green,
               height: 2000,
             ),
           ),
