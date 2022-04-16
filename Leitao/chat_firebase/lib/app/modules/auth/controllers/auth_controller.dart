@@ -4,23 +4,19 @@ import 'package:get/get.dart';
 
 class AuthController extends GetxController {
   var _formKey = GlobalKey<FormState>();
-  final Rx<AuthFormData> _authFormData = Rx<AuthFormData>(AuthFormData());
-  final RxBool _isLogin = true.obs;
+  AuthFormData _authFormData = AuthFormData();
 
   get formKey => _formKey;
   set formKey(value) => _formKey = value;
 
-  get isLogin => _isLogin.value;
-  set isLogin(value) => _isLogin.value = value;
-
-  get authFormData => _authFormData.value;
-  set authFormData(value) => _authFormData.value = value;
+  get authFormData => _authFormData;
+  set authFormData(value) => _authFormData = value;
 
   void submit() {
     _formKey.currentState?.validate();
   }
 
-  final count = 0.obs;
+  void increment() => _count.value++;
   @override
   void onInit() {
     super.onInit();
@@ -33,5 +29,8 @@ class AuthController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
+
+  final _count = 0.obs;
+  get count => _count.value;
+  set count(value) => _count.value = value;
 }

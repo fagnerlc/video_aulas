@@ -13,6 +13,7 @@ class AuthForm extends GetView<AuthController> {
     return Card(
       color: Colors.black45,
       child: Form(
+        key: controller.formKey,
         child: Column(
           children: [
             Padding(
@@ -54,14 +55,15 @@ class AuthForm extends GetView<AuthController> {
             ),
             Obx(() => CustomButton(
                 text:
-                    'Entrar ${controller.count} ${controller.authFormData.isLogin}',
+                    'Entrar ${controller.count} ${controller.authFormData.loginSingup}',
                 onPressed: controller.increment)),
             Obx(
               () => CustomButtonText(
-                text: controller.authFormData.isLogin
-                    ? 'Criar uma nova conta? ${controller.authFormData.isLogin}'
-                    : 'Já possui conta? ${controller.authFormData.isLogin}',
-                onPressed: () => controller.authFormData.toogleAuthMode(),
+                text: controller.authFormData.loginSingup
+                    ? 'Criar uma nova conta? ${controller.authFormData.loginSingup}'
+                    : 'Já possui conta? ${controller.authFormData.loginSingup}',
+                onPressed: () => controller.authFormData.loginSingup =
+                    !controller.authFormData.loginSingup,
               ),
             ),
           ],

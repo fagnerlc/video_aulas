@@ -1,23 +1,13 @@
 import 'dart:io';
-
-enum AuthMode { signup, login }
+import 'package:get/get.dart';
 
 class AuthFormData {
   String nome = '';
   String email = '';
   String senha = '';
   File? imagem;
-  AuthMode _mode = AuthMode.login;
+  final RxBool _loginSingup = true.obs;
 
-  bool get isLogin {
-    return _mode == AuthMode.login;
-  }
-
-  bool get isSignup {
-    return _mode == AuthMode.signup;
-  }
-
-  void toogleAuthMode() {
-    _mode = isLogin ? AuthMode.signup : AuthMode.login;
-  }
+  get loginSingup => _loginSingup.value;
+  set loginSingup(value) => _loginSingup.value = value;
 }
