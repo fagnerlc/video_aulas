@@ -3,11 +3,18 @@ import 'package:get/get.dart';
 
 class AuthFormData {
   String nome = '';
-  String email = '';
+  RxString email = ''.obs;
   String senha = '';
-  File? imagem;
   final RxBool _loginSingup = true.obs;
+
+  final _image = Rxn<File>();
+  get image => _image.value;
+  set image(value) => _image.value = value;
 
   get loginSingup => _loginSingup.value;
   set loginSingup(value) => _loginSingup.value = value;
+
+  authLoginSingup() {
+    loginSingup = !loginSingup;
+  }
 }

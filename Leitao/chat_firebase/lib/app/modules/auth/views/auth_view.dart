@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 
 class AuthView extends GetView<AuthController> {
+  const AuthView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,11 +15,22 @@ class AuthView extends GetView<AuthController> {
         title: const Text('AuthView'),
         centerTitle: true,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: AuthForm(),
-        ),
-      ),
+      body: Obx(() => Stack(
+            children: [
+              const Center(
+                child: SingleChildScrollView(
+                  child: AuthForm(),
+                ),
+              ),
+              if (controller.isLoading.value)
+                Container(
+                  color: Colors.black45,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+            ],
+          )),
     );
   }
 }

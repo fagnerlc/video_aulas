@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
   final String? initialValue;
+  final String? keyValue;
   final String labelText;
   final Color? cor;
   final IconData prefixIcon;
@@ -40,6 +41,7 @@ class CustomTextField extends StatefulWidget {
     this.onEditingComplete,
     this.keyboardType,
     this.autofillHints,
+    this.keyValue,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
+        initialValue: widget.initialValue,
+        key: ValueKey(widget.keyValue),
         controller: widget.controller,
         keyboardType: widget.keyboardType,
         onEditingComplete: widget.onEditingComplete,
@@ -60,6 +64,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         cursorColor: Theme.of(context).primaryColorLight,
         style: TextStyle(color: widget.cor ?? Theme.of(context).primaryColor),
         obscureText: widget.obscureText,
+        onChanged: widget.onChanged,
         decoration: InputDecoration(
           prefixIcon: Icon(
             widget.prefixIcon,

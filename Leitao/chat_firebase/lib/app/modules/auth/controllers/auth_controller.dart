@@ -1,10 +1,16 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:chat_firebase/app/data/models/auth/auth_form_data.dart';
+import 'package:chat_firebase/utils/alertas.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AuthController extends GetxController {
   var _formKey = GlobalKey<FormState>();
   AuthFormData _authFormData = AuthFormData();
+  RxBool isLoading = false.obs;
+  late void Function(File image) onImagePick;
 
   get formKey => _formKey;
   set formKey(value) => _formKey = value;
@@ -12,8 +18,77 @@ class AuthController extends GetxController {
   get authFormData => _authFormData;
   set authFormData(value) => _authFormData = value;
 
-  void submit() {
-    _formKey.currentState?.validate();
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+      maxWidth: 150,
+    );
+
+    if (pickedImage != null) {
+      authFormData.image = File(pickedImage.path);
+    }
+
+    // onImagePick(authFormData.image!);
+  }
+
+  // Valida Nome
+  String? validatorName(String? _name) {
+    final name = _name ?? '';
+    if (name.trim().length < 3) {
+      return 'Nome deve ter no mínimo 3 caracteres.';
+    }
+    return null;
+  }
+
+  // Valida Email
+  String? validatorEmail(String? _email) {
+    final email = _email ?? '';
+    if (!email.contains('@')) {
+      return 'E-mail informado não é válido.';
+    }
+    return null;
+  }
+
+  // Valida Senha
+  validatorPassword(_password) {
+    final password = _password ?? '';
+    if (password.length < 3) {
+      return 'Senha deve ter no mínimo 4 caracteres.';
+    }
+    return null;
+  }
+
+  showError(String msg, BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+        backgroundColor: Theme.of(context).errorColor,
+      ),
+    );
+  }
+
+  // void handleImagePick(File image) {
+  //   authFormData.image = image;
+  // }
+
+  void submit(BuildContext context) async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
+    debugPrint('${authFormData.loginSingup}');
+    if (authFormData.image == null && !authFormData.loginSingup) {
+      return Alertas().showErrorDialog(
+        'Selecione Imagem!',
+        'Imagem não selecionada!',
+        context,
+      );
+      // return showError('Imagem não selecionada!', context);
+    }
+    isLoading.value = true;
+    await Future.delayed(const Duration(seconds: 4));
+    debugPrint('AGORA');
+    isLoading.value = false;
   }
 
   void increment() => _count.value++;

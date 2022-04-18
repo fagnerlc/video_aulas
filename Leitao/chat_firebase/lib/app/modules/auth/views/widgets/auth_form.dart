@@ -1,4 +1,5 @@
 import 'package:chat_firebase/app/modules/auth/controllers/auth_controller.dart';
+import 'package:chat_firebase/app/modules/auth/views/widgets/user_image_picker.dart';
 import 'package:chat_firebase/widgets/custom_button.dart';
 import 'package:chat_firebase/widgets/custom_button_text.dart';
 import 'package:chat_firebase/widgets/custom_text_field.dart';
@@ -16,30 +17,35 @@ class AuthForm extends GetView<AuthController> {
         key: controller.formKey,
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 15, bottom: 15, right: 15, left: 15),
-              child: CustomTextField(
-                prefixIcon: Icons.person,
-                labelText: 'Nome',
-                // suffixIconBool: true,
-                // suffixIcon: Icons.text_snippet,
-                suffixIconFunction: () {
-                  debugPrint('Yes');
-                },
-              ),
-            ),
+            Obx(() => Visibility(
+                visible: !controller.authFormData.loginSingup,
+                child: UserImagePicker(
+                    // onImagePick: controller.handleImagePick,
+                    ))),
+            Obx(() => Visibility(
+                visible: !controller.authFormData.loginSingup,
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15, bottom: 15, right: 15, left: 15),
+                    child: CustomTextField(
+                      prefixIcon: Icons.person,
+                      labelText: 'Nome',
+                      initialValue: controller.authFormData.nome,
+                      onChanged: (nome) => controller.authFormData.nome = nome,
+                      keyValue: 'name',
+                      validatorFunction: (value) =>
+                          controller.validatorName(value),
+                    )))),
             Padding(
               padding: const EdgeInsets.only(
                   top: 15, bottom: 15, right: 15, left: 15),
               child: CustomTextField(
                 prefixIcon: Icons.email,
-                labelText: 'Email',
-                // suffixIconBool: true,
-                // suffixIcon: Icons.text_snippet,
-                suffixIconFunction: () {
-                  debugPrint('Yes');
-                },
+                labelText: 'E-mail',
+                onChanged: (email) =>
+                    controller.authFormData.email.value = email,
+                keyValue: 'email',
+                validatorFunction: (value) => controller.validatorEmail(value),
               ),
             ),
             Padding(
@@ -48,22 +54,29 @@ class AuthForm extends GetView<AuthController> {
               child: CustomTextField(
                 prefixIcon: Icons.password,
                 labelText: 'Senha',
+                keyValue: 'password',
                 obscureText: true,
+                onChanged: (senha) => controller.authFormData.senha = senha,
                 suffixIconBool: true,
                 suffixIconObscureTextBool: true,
+                validatorFunction: (value) =>
+                    controller.validatorPassword(value),
               ),
             ),
-            Obx(() => CustomButton(
-                text:
-                    'Entrar ${controller.count} ${controller.authFormData.loginSingup}',
-                onPressed: controller.increment)),
+            Obx(
+              () => CustomButton(
+                text: controller.authFormData.loginSingup
+                    ? 'ENTRAR'
+                    : 'CADASTRAR',
+                onPressed: () => controller.submit(context),
+              ),
+            ),
             Obx(
               () => CustomButtonText(
                 text: controller.authFormData.loginSingup
-                    ? 'Criar uma nova conta? ${controller.authFormData.loginSingup}'
-                    : 'Já possui conta? ${controller.authFormData.loginSingup}',
-                onPressed: () => controller.authFormData.loginSingup =
-                    !controller.authFormData.loginSingup,
+                    ? 'Criar uma nova conta?'
+                    : 'Já possui conta?',
+                onPressed: controller.authFormData.authLoginSingup,
               ),
             ),
           ],
