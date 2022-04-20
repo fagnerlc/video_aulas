@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:chat_firebase/app/data/models/auth/auth_form_data.dart';
+import 'package:chat_firebase/app/data/services/auth/auth_mock_service.dart';
 import 'package:chat_firebase/utils/alertas.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,6 @@ class AuthController extends GetxController {
   var _formKey = GlobalKey<FormState>();
   AuthFormData _authFormData = AuthFormData();
   RxBool isLoading = false.obs;
-  late void Function(File image) onImagePick;
 
   get formKey => _formKey;
   set formKey(value) => _formKey = value;
@@ -29,8 +29,6 @@ class AuthController extends GetxController {
     if (pickedImage != null) {
       authFormData.image = File(pickedImage.path);
     }
-
-    // onImagePick(authFormData.image!);
   }
 
   // Valida Nome
@@ -69,10 +67,6 @@ class AuthController extends GetxController {
     );
   }
 
-  // void handleImagePick(File image) {
-  //   authFormData.image = image;
-  // }
-
   void submit(BuildContext context) async {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
@@ -83,9 +77,28 @@ class AuthController extends GetxController {
         'Imagem não selecionada!',
         context,
       );
-      // return showError('Imagem não selecionada!', context);
     }
-    isLoading.value = true;
+    try {
+      isLoading.value = true;
+      if (_authFormData.loginSingup) {
+        // LOGIN
+        AuthMockService().login(
+          _authFormData.email.value,
+          _authFormData.senha,
+        );
+      } else {
+        // SIGNUP
+        AuthMockService().signup(
+          _authFormData.nome,
+          _authFormData.email.value,
+          _authFormData.cpf,
+          _authFormData.telefone,
+          _authFormData.image,
+        );
+      }
+    } on Exception catch (e) {
+      // TRATAR ERRO
+    }
     await Future.delayed(const Duration(seconds: 4));
     debugPrint('AGORA');
     isLoading.value = false;
